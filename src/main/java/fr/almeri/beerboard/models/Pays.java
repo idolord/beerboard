@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Pays {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="nom_pays")
     private String nomPays;
     @Column(name="consommation")
     private double consommation;
