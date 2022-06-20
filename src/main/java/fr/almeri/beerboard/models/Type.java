@@ -7,7 +7,8 @@ import java.util.Objects;
 @Table(name="type")
 public class Type {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="no_type")
     private Integer noType;
     @Column(name="nom_type")
     private String nomType;

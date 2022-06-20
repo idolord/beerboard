@@ -1,19 +1,24 @@
 package fr.almeri.beerboard.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
-//@Entity
-//@Table(name="brasserie")
+@Entity
+@Table(name="brasserie")
 public class Brasserie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="code_brasserie")
     private String codeBrasserie;
     @Column(name="nom_brasserie")
     private String nomBrasserie;
     @Column(name="ville")
     private String ville;
-    @Column(name="region")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="region")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Region region;
 
     public Brasserie() {

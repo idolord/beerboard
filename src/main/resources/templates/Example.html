@@ -29,7 +29,7 @@
                 <li class="breadcrumb-item active">des gros paté</li>
             </ol>
             <div class="row">
-                <span th:text="'Paté '+ ${prenom} + 'aaaaa'"></span>
+                <span th:text="'Bienvenu '+ ${prenom}"></span>
                 <h3>mon pays</h3>
                 Nom du pays :<span th:text="${pays.nomPays}"></span>
                 Consomation :<span th:text="${pays.getConsommation()} + ' Litre/an/hab'">  </span>
@@ -47,6 +47,68 @@
                             <td th:text="${pay.getConsommation()}"/>
                             <td th:text="${pay.getProduction()}"/>
                         </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th>code</th>
+                    <th>nom</th>
+                    <th>ville</th>
+                    <th>région</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="brass: ${listbrass}">
+                        <td th:text="${brass.getCodeBrasserie()}"/>
+                        <td th:text="${brass.getNomBrasserie()}"/>
+                        <td th:text="${brass.getVille()}"/>
+                        <td th:text="${brass.getRegion()}"/>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th>code brasserie</th>
+                    <th>nom marque</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="marque: ${listmarque}">
+                        <td th:text="${marque.getBrasserie()}"/>
+                        <td th:text="${marque.getNomMarque()}"/>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th>nom région</th>
+                    <th>nom pays</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="region: ${listregion}">
+                        <td th:text="${region.getNomRegion()}"/>
+                        <td th:text="${region.getNomPays()}"/>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th>code type</th>
+                    <th>nom type</th>
+                    <th>description</th>
+                    <th>fermentation</th>
+                    <th>commentaires</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="type: ${listtype}">
+                        <td th:text="${type.getNoType()}"/>
+                        <td th:text="${type.getNomType()}"/>
+                        <td th:text="${type.getDescription()}"/>
+                        <td th:text="${type.getFermentation()}"/>
+                        <td th:text="${type.getCommentaire()}"/>
+                    </tr>
                     </tbody>
                 </table>
 

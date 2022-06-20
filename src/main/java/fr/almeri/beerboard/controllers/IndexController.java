@@ -1,5 +1,8 @@
 package fr.almeri.beerboard.controllers;
 
+import fr.almeri.beerboard.models.Brasserie;
+import fr.almeri.beerboard.models.Region;
+import fr.almeri.beerboard.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,23 +19,46 @@ import java.util.*;
 
 @Controller
 public class IndexController {
-
+    @Autowired
+    private PaysRepository paysRepository;
+    @Autowired
+    private BiereRepository biereRepository;
+    @Autowired
+    private BrasserieRepository brasserieRepository;
+    @Autowired
+    private MarqueRepository marqueRepository;
+    @Autowired
+    private RegionRepository regionRepository;
+    @Autowired
+    private TypeRepository typeRepository;
     @GetMapping("/")
     public String home(Model pModel, HttpSession pSession){
-        pModel.addAttribute("bieres", 328);
-        pModel.addAttribute("brasseries", 99);
+        pModel.addAttribute("bieres", (int) biereRepository.count() );
+        pModel.addAttribute("brasseries", (int) brasserieRepository.count());
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
         pModel.addAttribute("updated", dtf.format(LocalDateTime.now()));
 
         //pieChart
-        ArrayList<String> labelsPieChart = new ArrayList<>();
-        labelsPieChart.add("Label 1");
-        labelsPieChart.add("Label 2");
-        pModel.addAttribute("labelsPieChart", labelsPieChart);
-        pModel.addAttribute("datasPieChart", new int[]{2,9});
+        ArrayList<Region> listRegion =  (ArrayList<Region>) regionRepository.findAll();
+        ArrayList<Brasserie> ListBrasserie =  (ArrayList<Brasserie>) brasserieRepository.findAll();
+        ArrayList<String> labelsRegion = new ArrayList<>();
+        int[] datasPieChart = new int[listRegion.size()];
+        for (int i = 1; i < listRegion.size();i++ ) {
+            labelsRegion.add(listRegion.get(i).getNomRegion());
+            for (Brasserie brass : ListBrasserie) {
+                if (listRegion.get(i).getNomRegion() == brass.getRegion().getNomRegion())
+                {
+                    datasPieChart[i] += 1;
+                }
+            }
+        }
 
-        //AreaChart
+        pModel.addAttribute("labelsPieChart", labelsRegion);
+        pModel.addAttribute("datasPieChart", datasPieChart);
+
+        //AreaChart nb biere par taux d'alcool
+
         pModel.addAttribute("labelsAreaChart", new String[]{"2.6", "5", "7.5"});
         pModel.addAttribute("datasAreaChart", new int[]{1,50,15});
 

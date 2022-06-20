@@ -1,18 +1,25 @@
 package fr.almeri.beerboard.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
-//@Entity
-//@Table(name="biere")
+@Entity
+@Table(name="biere")
 public class Biere {
-    @Column(name="marque")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="nom_marque")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Marque marque;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="version")
     private String version;
-    @Column(name="no_type")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="no_type")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Type type;
     @Column(name="couleur_biere")
     private String couleurBiere;
