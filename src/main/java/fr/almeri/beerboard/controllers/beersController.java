@@ -17,13 +17,13 @@ public class beersController {
     @Autowired
     private BiereRepository biereRepository;
 
-    @GetMapping("/beer")
+    @GetMapping("/beers")
     public String getPageExemple(Model pModel)
     {
         ArrayList<Biere> listBeerFromDatabase = (ArrayList<Biere>) biereRepository.findAll();
         pModel.addAttribute("listbeer",listBeerFromDatabase);
 
-        return "beer";
+        return "beers";
     }
 
 }

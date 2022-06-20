@@ -30,24 +30,28 @@
             </ol>
             <div class="row">
 
-                <table class="table table-bordered table-striped">
+
+
+                <table class="table table-bordered table-striped" id="datatablesSimple">
                     <thead>
-                    <th>Nom marque</th>
-                    <th>Version</th>
-                    <th>No type</th>
-                    <th>Couleur</th>
-                    <th>Commentaires</th>
+                    <th>code</th>
+                    <th>nom</th>
+                    <th>ville</th>
+                    <th>région</th>
                     </thead>
                     <tbody>
-                    <tr th:each="beer: ${listbeer}">
-                        <td th:text="${beer.getNoType()}"/>
-                        <td th:text="${beer.getNomType()}"/>
-                        <td th:text="${beer.getDescription()}"/>
-                        <td th:text="${beer.getFermentation()}"/>
-                        <td th:text="${beer.getCommentaire()}"/>
+                    <tr th:each="brass: ${listbrass}">
+                        <td th:text="${brass.getCodeBrasserie()}"/>
+                        <td th:text="${brass.getNomBrasserie()}"/>
+                        <td th:text="${brass.getVille()}"/>
+                        <td th:text="${brass.getRegion()}"/>
+                        <td>
+                            <a th:href="@{'/see-brewerie/' + ${brass.getCodeBrasserie()}}"><img src="/img/oeuil.png" width="20" height="20"/></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+
 
             </div>
         </div>

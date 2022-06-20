@@ -4,11 +4,13 @@ package fr.almeri.beerboard.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@IdClass(BiereId.class)
 @Table(name="biere")
-public class Biere {
+public class Biere implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nom_marque")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -24,10 +26,10 @@ public class Biere {
     @Column(name="couleur_biere")
     private String couleurBiere;
     @Column(name="taux_alcool")
-    private double tauxAlcool;
+    private Double tauxAlcool;
     @Column(name="caracteristiques")
     private String caracteristiques;
-    private String noTypeStr;
+    //private String noTypeStr;
 
     public Biere() {
     }
@@ -37,12 +39,12 @@ public class Biere {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Biere biere = (Biere) o;
-        return Double.compare(biere.tauxAlcool, tauxAlcool) == 0 && Objects.equals(marque, biere.marque) && Objects.equals(version, biere.version) && Objects.equals(type, biere.type) && Objects.equals(couleurBiere, biere.couleurBiere) && Objects.equals(caracteristiques, biere.caracteristiques) && Objects.equals(noTypeStr, biere.noTypeStr);
+        return Double.compare(biere.tauxAlcool, tauxAlcool) == 0 && Objects.equals(marque, biere.marque) && Objects.equals(version, biere.version) && Objects.equals(type, biere.type) && Objects.equals(couleurBiere, biere.couleurBiere) && Objects.equals(caracteristiques, biere.caracteristiques);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(marque, version, type, couleurBiere, tauxAlcool, caracteristiques, noTypeStr);
+        return Objects.hash(marque, version, type, couleurBiere, tauxAlcool, caracteristiques);
     }
 
     public Marque getMarque() {
@@ -61,7 +63,7 @@ public class Biere {
         return this.couleurBiere;
     }
 
-    public double getTauxAlcool() {
+    public Double getTauxAlcool() {
         return this.tauxAlcool;
     }
 
@@ -69,9 +71,9 @@ public class Biere {
         return this.caracteristiques;
     }
 
-    public String getNoTypeStr() {
-        return this.noTypeStr;
-    }
+    //public String getNoTypeStr() {
+    //    return this.noTypeStr;
+    //}
 
     public void setMarque(Marque marque) {
         this.marque = marque;
@@ -89,7 +91,7 @@ public class Biere {
         this.couleurBiere = couleurBiere;
     }
 
-    public void setTauxAlcool(double tauxAlcool) {
+    public void setTauxAlcool(Double tauxAlcool) {
         this.tauxAlcool = tauxAlcool;
     }
 
@@ -97,7 +99,7 @@ public class Biere {
         this.caracteristiques = caracteristiques;
     }
 
-    public void setNoTypeStr(String noTypeStr) {
-        this.noTypeStr = noTypeStr;
-    }
+    //public void setNoTypeStr(String noTypeStr) {
+    //    this.noTypeStr = noTypeStr;
+    //}
 }

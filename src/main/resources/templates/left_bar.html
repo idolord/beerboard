@@ -19,9 +19,23 @@
                     Profil
                 </a>
                 <div class="sb-sidenav-menu-heading">DETAILS</div>
-
+                <a class="nav-link" th:href="@{/beers}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                    Liste des Bières
+                </a>
+                <a class="nav-link" th:href="@{/breweries}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                    Liste des Brasseries
+                </a>
                 <div class="sb-sidenav-menu-heading">ADMINISTRATION</div>
-
+                <a class="nav-link" th:href="@{/add-beers}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                    Ajout de Bière
+                </a>
+                <a class="nav-link" th:href="@{/add-breweries}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                    Ajout de Brasserie
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">

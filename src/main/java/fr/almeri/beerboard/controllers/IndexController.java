@@ -31,50 +31,39 @@ public class IndexController {
     private RegionRepository regionRepository;
     @Autowired
     private TypeRepository typeRepository;
+
     @GetMapping("/")
     public String home(Model pModel, HttpSession pSession){
         pModel.addAttribute("bieres", (int) biereRepository.count() );
         pModel.addAttribute("brasseries", (int) brasserieRepository.count());
+        pModel.addAttribute("marque", (int)marqueRepository.count());
+        pModel.addAttribute("region", (int)regionRepository.count());
+
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
         pModel.addAttribute("updated", dtf.format(LocalDateTime.now()));
 
         //pieChart
-        ArrayList<Region> listRegion =  (ArrayList<Region>) regionRepository.findAll();
-        ArrayList<Brasserie> ListBrasserie =  (ArrayList<Brasserie>) brasserieRepository.findAll();
-        ArrayList<String> labelsRegion = new ArrayList<>();
-        int[] datasPieChart = new int[listRegion.size()];
-        for (int i = 1; i < listRegion.size();i++ ) {
-            labelsRegion.add(listRegion.get(i).getNomRegion());
-            for (Brasserie brass : ListBrasserie) {
-                if (listRegion.get(i).getNomRegion() == brass.getRegion().getNomRegion())
-                {
-                    datasPieChart[i] += 1;
-                }
-            }
-        }
-
-        pModel.addAttribute("labelsPieChart", labelsRegion);
-        pModel.addAttribute("datasPieChart", datasPieChart);
+        pModel.addAttribute("labelsPieChart", brasserieRepository.getRegionFromBrasserieAsc());
+        pModel.addAttribute("datasPieChart", brasserieRepository.getRegionNumberFromBrasserieAsc());
 
         //AreaChart nb biere par taux d'alcool
 
-        pModel.addAttribute("labelsAreaChart", new String[]{"2.6", "5", "7.5"});
-        pModel.addAttribute("datasAreaChart", new int[]{1,50,15});
+        pModel.addAttribute("labelsAreaChart", biereRepository.getThxAlcoolAsc());
+        pModel.addAttribute("datasAreaChart", biereRepository.getNbrThxAlcoolAsc());
 
 
-        pModel.addAttribute("labelsBarChart", new String[]{"Pays 1"," Pays 2"});
-        pModel.addAttribute("datasConsommation", new int[]{145,99});
-        pModel.addAttribute("datasProduction", new int[]{160,100});
+        pModel.addAttribute("labelsBarChart", paysRepository.getNomsPaysAsc());
+        pModel.addAttribute("datasConsommation", paysRepository.getConsoPaysAsc());
+        pModel.addAttribute("datasProduction", paysRepository.getProdPaysAsc());
 
-        pModel.addAttribute("labelsBarChart1", new String[]{"Brasserie 1", "Brasserie 2"});
-        pModel.addAttribute("datasBarChart1", new int[]{5,2});
 
-        ArrayList<String> labelsBarChart2 = new ArrayList<>();
-        labelsBarChart2.add("Marque 1");
-        labelsBarChart2.add("Marque 2");
-        pModel.addAttribute("labelsBarChart2", labelsBarChart2);
-        pModel.addAttribute("datasBarChart2", new int[]{1,4});
+        pModel.addAttribute("labelsBarChart1", brasserieRepository.getBrasserieAsc());
+        pModel.addAttribute("datasBarChart1", marqueRepository.getMarquesBrasserieAsc());
+
+
+        pModel.addAttribute("labelsBarChart2", biereRepository.getmarqueAlcoolAsc());
+        pModel.addAttribute("datasBarChart2", biereRepository.getNbrVerparmarqueAlcoolAsc());
 
         return "index";
     }

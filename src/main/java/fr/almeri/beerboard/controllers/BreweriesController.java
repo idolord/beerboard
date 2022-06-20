@@ -16,7 +16,7 @@ public class BreweriesController {
     @Autowired
     private BrasserieRepository brasserieRepository;
 
-    @GetMapping("/brewerie")
+    @GetMapping("/breweries")
     public String getPageExemple(Model pModel)
     {
         ArrayList<Brasserie> listBrassFromDatabase = (ArrayList<Brasserie>) brasserieRepository.findAll();
