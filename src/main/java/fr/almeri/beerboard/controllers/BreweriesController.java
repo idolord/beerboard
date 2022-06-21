@@ -25,4 +25,13 @@ public class BreweriesController {
         return "breweries";
     }
 
+    @GetMapping("see-brewery/{code}")
+    public String getPageSeeBrewery(Model pModel, String code)
+    {
+        Brasserie entity = brasserieRepository.findById(code).orElseThrow();
+        pModel.addAttribute("brasserie", entity);
+
+        return "see-brewery";
+    }
+
 }

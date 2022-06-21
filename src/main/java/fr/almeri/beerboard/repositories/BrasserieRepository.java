@@ -17,4 +17,5 @@ public interface BrasserieRepository extends CrudRepository<Brasserie,String> {
 
     @Query("SELECT Distinct p.nomBrasserie FROM Brasserie p ORDER BY p.nomBrasserie ASC")
     public ArrayList<String> getBrasserieAsc();
+
 }
