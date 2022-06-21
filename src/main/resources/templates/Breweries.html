@@ -46,7 +46,10 @@
                         <td th:text="${brass.getVille()}"/>
                         <td th:text="${brass.getRegion()}"/>
                         <td>
-                            <a th:href="@{'/see-brewerie/' + ${brass.getCodeBrasserie()}}"><img src="/img/oeuil.png" width="20" height="20"/></a>
+                            <a th:href="@{'/see-brewery/' + ${brass.getCodeBrasserie()}}"><img src="/img/oeuil.png" width="20" height="20"/></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/add-brewery(isMod=${false},codeBrass=${brass.getCodeBrasserie()})}"><img src="/img/OIP.jfif" width="20" height="20"/></a>
                         </td>
                     </tr>
                     </tbody>

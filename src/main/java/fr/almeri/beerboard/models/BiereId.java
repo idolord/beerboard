@@ -34,6 +34,12 @@ public class BiereId implements Serializable {
         this.version = version;
     }
 
+    public BiereId(){};
+    public BiereId(Marque marque, String version) {
+        this.marque = marque;
+        this.version = version;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

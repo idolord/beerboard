@@ -5,7 +5,7 @@ import fr.almeri.beerboard.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -16,6 +16,12 @@ public class BreweriesController {
     @Autowired
     private BrasserieRepository brasserieRepository;
 
+    @Autowired
+    private BiereRepository biereRepository;
+
+    @Autowired
+    private RegionRepository regionRepository;
+
     @GetMapping("/breweries")
     public String getPageExemple(Model pModel)
     {
@@ -25,13 +31,32 @@ public class BreweriesController {
         return "breweries";
     }
 
-    @GetMapping("see-brewery/{code}")
-    public String getPageSeeBrewery(Model pModel, String code)
+    @GetMapping("/see-brewery/{code}")
+    public String getPageSeeBrewery(Model pModel, @PathVariable String code)
     {
         Brasserie entity = brasserieRepository.findById(code).orElseThrow();
         pModel.addAttribute("brasserie", entity);
+        ArrayList<Biere> biereEntity = biereRepository.getBierefromBrasserie(entity.getCodeBrasserie());
+        pModel.addAttribute("bieres", biereEntity);
 
         return "see-brewery";
     }
 
+    @GetMapping("/add-brewery")
+    public String GetPageModifiBrassery(Model pModel, @RequestParam boolean isMod, @RequestParam String codeBrass )
+    {
+        pModel.addAttribute("update", isMod);
+        Brasserie brasserie = brasserieRepository.findById(codeBrass).orElseThrow();
+        pModel.addAttribute("brasserie", brasserie);
+        ArrayList<Region> listeRegion = (ArrayList<Region>) regionRepository.findAll();
+        pModel.addAttribute("listeRegion", listeRegion);
+        return "add-brewery";
+    }
+
+    @PostMapping("/valid-brewery")
+    public String ValidateBrassery(@ModelAttribute Brasserie object, Model pModel)
+    {
+        brasserieRepository.save(object);
+        return "redirect:breweries";
+    }
 }
