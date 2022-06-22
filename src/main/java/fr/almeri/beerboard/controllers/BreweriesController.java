@@ -43,10 +43,13 @@ public class BreweriesController {
     }
 
     @GetMapping("/add-brewery")
-    public String GetPageModifiBrassery(Model pModel, @RequestParam boolean isMod, @RequestParam String codeBrass )
+    public String GetPageModifiBrassery(Model pModel, @RequestParam boolean isMod, @RequestParam(required = false) String codeBrass )
     {
         pModel.addAttribute("update", isMod);
-        Brasserie brasserie = brasserieRepository.findById(codeBrass).orElseThrow();
+        Brasserie brasserie = new Brasserie();
+        if (!isMod) {
+            brasserie = brasserieRepository.findById(codeBrass).orElseThrow();
+        }
         pModel.addAttribute("brasserie", brasserie);
         ArrayList<Region> listeRegion = (ArrayList<Region>) regionRepository.findAll();
         pModel.addAttribute("listeRegion", listeRegion);
@@ -54,9 +57,9 @@ public class BreweriesController {
     }
 
     @PostMapping("/valid-brewery")
-    public String ValidateBrassery(@ModelAttribute Brasserie object, Model pModel)
+    public String ValidateBrassery(@ModelAttribute Brasserie brasserie, Model pModel)
     {
-        brasserieRepository.save(object);
+        brasserieRepository.save(brasserie);
         return "redirect:breweries";
     }
 }
