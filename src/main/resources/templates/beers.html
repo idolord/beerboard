@@ -40,14 +40,17 @@
                     </thead>
                     <tbody>
                     <tr th:each="beer: ${listbeer}">
-                        <td th:text="${beer.getMarque()}"/>
+                        <td th:text="${beer.getMarque().getNomMarque()}"/>
                         <td th:text="${beer.getVersion()}"/>
-                        <td th:text="${beer.getType()}"/>
+                        <td th:text="${beer.getType().getNomType()}"/>
                         <td th:text="${beer.getCouleurBiere()}"/>
                         <td th:text="${beer.getTauxAlcool()}"/>
                         <td th:text="${beer.getCaracteristiques()}"/>
                         <td>
                             <a th:href="@{/see-beer(marque=${beer.getMarque().getNomMarque()},version=${beer.getVersion()})}"><img src="/img/oeuil.png" width="20" height="20"/></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/add-brewery(isMod=${true},marque=${beer.getMarque()},version=${beer.getVersion()})}"><img src="/img/OIP.jfif" width="20" height="20"/></a>
                         </td>
                     </tr>
                     </tbody>

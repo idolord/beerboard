@@ -28,11 +28,11 @@
                     Liste des Brasseries
                 </a>
                 <div class="sb-sidenav-menu-heading">ADMINISTRATION</div>
-                <a class="nav-link" th:href="@{/add-beers}">
+                <a class="nav-link" th:href="@{/add-beer(isMod=${false})}">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
                     Ajout de Bière
                 </a>
-                <a class="nav-link" th:href="@{/add-brewery(isMod=${true})}">
+                <a class="nav-link" th:href="@{/add-brewery(isMod=${false})}">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
                     Ajout de Brasserie
                 </a>

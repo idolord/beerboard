@@ -47,7 +47,7 @@ public class BreweriesController {
     {
         pModel.addAttribute("update", isMod);
         Brasserie brasserie = new Brasserie();
-        if (!isMod) {
+        if (isMod) {
             brasserie = brasserieRepository.findById(codeBrass).orElseThrow();
         }
         pModel.addAttribute("brasserie", brasserie);

@@ -66,8 +66,8 @@ public class ExempleController {
         pModel.addAttribute("listmarque",listMarqueFromDatabase);
         ArrayList<Region> listRegionFromDatabase = (ArrayList<Region>) regionRepository.findAll();
         pModel.addAttribute("listregion",listRegionFromDatabase);
-        ArrayList<Type> listTypeFromDatabase = (ArrayList<Type>) typeRepository.findAll();
-        pModel.addAttribute("listtype",listTypeFromDatabase);
+        ArrayList<Type> listTypeFromDatabaseB = (ArrayList<Type>) typeRepository.findAll();
+        pModel.addAttribute("listtype", listTypeFromDatabaseB);
 
         return "example";
     }

@@ -22,6 +22,14 @@ public class Type {
     public Type() {
     }
 
+    public Type(String arg) {
+        this.noType = Integer.parseInt(arg);
+    }
+
+    public Type(int arg) {
+        this.noType = arg;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,7 +57,7 @@ public class Type {
     }
 
     public String getNoTypeStr() {
-        return this.noType.toString();
+        return String.valueOf(this.noType);
     }
 
     public void setNoTypeStr(String noType) {

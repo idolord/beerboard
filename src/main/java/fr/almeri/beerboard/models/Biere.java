@@ -29,7 +29,8 @@ public class Biere implements Serializable {
     private Double tauxAlcool;
     @Column(name="caracteristiques")
     private String caracteristiques;
-    //private String noTypeStr;
+    @Transient
+    private String noTypeStr;
 
     public Biere() {
     }
@@ -39,12 +40,12 @@ public class Biere implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Biere biere = (Biere) o;
-        return Double.compare(biere.tauxAlcool, tauxAlcool) == 0 && Objects.equals(marque, biere.marque) && Objects.equals(version, biere.version) && Objects.equals(type, biere.type) && Objects.equals(couleurBiere, biere.couleurBiere) && Objects.equals(caracteristiques, biere.caracteristiques);
+        return Objects.equals(getMarque(), biere.getMarque()) && Objects.equals(getVersion(), biere.getVersion()) && Objects.equals(getType(), biere.getType()) && Objects.equals(getCouleurBiere(), biere.getCouleurBiere()) && Objects.equals(getTauxAlcool(), biere.getTauxAlcool()) && Objects.equals(getCaracteristiques(), biere.getCaracteristiques()) && Objects.equals(getNoTypeStr(), biere.getNoTypeStr());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(marque, version, type, couleurBiere, tauxAlcool, caracteristiques);
+        return Objects.hash(getMarque(), getVersion(), getType(), getCouleurBiere(), getTauxAlcool(), getCaracteristiques(), getNoTypeStr());
     }
 
     public Marque getMarque() {
@@ -71,9 +72,10 @@ public class Biere implements Serializable {
         return this.caracteristiques;
     }
 
-    //public String getNoTypeStr() {
-    //    return this.noTypeStr;
-    //}
+    public String getNoTypeStr() {
+        this.type = new Type();
+        return this.type.getNoTypeStr();
+    }
 
     public void setMarque(Marque marque) {
         this.marque = marque;
@@ -85,6 +87,17 @@ public class Biere implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public void setType(String type) {
+        Type temp = new Type();
+        temp.setNoType(Integer.parseInt(type));
+        this.type = temp;
+    }
+    public void setType(int type) {
+        Type temp = new Type();
+        temp.setNoType(type);
+        this.type = temp;
     }
 
     public void setCouleurBiere(String couleurBiere) {
@@ -99,7 +112,9 @@ public class Biere implements Serializable {
         this.caracteristiques = caracteristiques;
     }
 
-    //public void setNoTypeStr(String noTypeStr) {
-    //    this.noTypeStr = noTypeStr;
-    //}
+    public void setNoTypeStr(String noTypeStr) {
+        Type type = new Type();
+        type.setNoTypeStr(noTypeStr);
+        this.type = type;
+    }
 }
