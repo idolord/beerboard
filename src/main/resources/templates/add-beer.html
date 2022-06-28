@@ -68,7 +68,7 @@
                     <label for="type" class="col-sm-2 col-form-label">Type</label>
                     <div class="col-sm-10">
                       <select class="form-select" aria-label="Default select example" id="type" name="noTypeStr" required>
-                        <option selected>Types</option>
+                        <option selected></option>
                         <option th:field="*{noTypeStr}" th:each="type : ${listeType}"  th:value="${type.getNoTypeStr()}" th:text="${type.getNomType()}"></option>
                       </select>
                     </div>

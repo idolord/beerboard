@@ -109,7 +109,7 @@
                           <input th:value="${biere.getTauxAlcool()}"  type="text" class="form-control" id="tauxAlcool" placeholder="Taux d'alcool" readonly="readonly">
                         </div>
                       </div>
-                      <div class="form-group row ">
+                      <div th:if="${biere.getCaracteristiques() != null}" class="form-group row ">
                         <label for="regionBrasserie" class="col-sm-3 col-form-label">Caractéristiques</label>
                         <div class="col-sm-9">
                           <textarea th:text="${biere.getCaracteristiques()}" class="form-control" rows="3" placeholder="Caractéristiques de la bière" readonly="readonly"></textarea>
@@ -151,10 +151,10 @@
                         <input th:value="${biere.getType().getFermentation()}" type="text" class="form-control" id="fermentation" placeholder="Fermentation" readonly="readonly">
                       </div>
                     </div>
-                    <div class="form-group row ">
+                    <div th:if="${biere.getType().getCommentaire() != null}" class="form-group row ">
                       <label for="commentaire" class="col-sm-3 col-form-label">Commentaire</label>
                       <div class="col-sm-9">
-                        <textarea th:text="${biere.getType().getNomType()}" class="form-control" rows="3" id="commentaire" placeholder="Commentaire" readonly="readonly"></textarea>
+                        <textarea th:text="${biere.getType().getCommentaire()}" class="form-control" rows="3" id="commentaire" placeholder="Commentaire" readonly="readonly"></textarea>
                       </div>
                     </div>
                   </form>
