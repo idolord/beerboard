@@ -44,9 +44,13 @@
           <div class="card-body">
             <div class="row">
               <div class="col-10">
+                <span th:text="${msg}" th:if="${msg}" class="alert-warning"></span>
+                </br>
                 <form class=""
                       method="post" enctype="application/x-www-form-urlencoded"
                       th:action="@{/valid-brewery(object)}" th:object="${brasserie}">
+
+                  <input type="text" class="form-control" id="update" name="update" th:value="${update}" hidden>
                   <div class="form-group row mb-2">
                     <label for="indentifiant" class="col-sm-2 col-form-label">Identifiant de la brasserie</label>
                     <div class="col-sm-10">
@@ -69,7 +73,7 @@
                     <label for="region" class="col-sm-2 col-form-label">Region</label>
                     <div class="col-sm-10">
                       <select class="form-select" aria-label="Default select example" id="region" name="region" required>
-                        <option selected>Région</option>
+                        <option selected></option>
                         <option th:field="*{region}" th:each="region : ${listeRegion}"  th:value="${region.getNomRegion()}" th:text="${region.getNomRegion()}">One</option>
                       </select>
                     </div>

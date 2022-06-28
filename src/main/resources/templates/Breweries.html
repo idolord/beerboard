@@ -51,6 +51,9 @@
                         <td>
                             <a th:href="@{/add-brewery(isMod=${false},codeBrass=${brass.getCodeBrasserie()})}"><img src="/img/OIP.jfif" width="20" height="20"/></a>
                         </td>
+                        <td>
+                            <a class="text-danger" th:href="@{/delete-beer(codeBrass=${brass.getCodeBrasserie()})}"><i class="fa-solid fa-trash"></i></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

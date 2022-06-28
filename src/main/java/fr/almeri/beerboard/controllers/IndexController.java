@@ -33,43 +33,50 @@ public class IndexController {
     private TypeRepository typeRepository;
 
     @GetMapping("/")
-    public String home(Model pModel, HttpSession pSession){
-        pModel.addAttribute("bieres", (int) biereRepository.count() );
-        pModel.addAttribute("brasseries", (int) brasserieRepository.count());
-        pModel.addAttribute("marque", (int)marqueRepository.count());
-        pModel.addAttribute("region", (int)regionRepository.count());
+    public String home(Model pModel, HttpSession Session){
+
+        if(Session.getAttribute("auth") != null) {
+            pModel.addAttribute("bieres", (int) biereRepository.count() );
+            pModel.addAttribute("brasseries", (int) brasserieRepository.count());
+            pModel.addAttribute("marque", (int)marqueRepository.count());
+            pModel.addAttribute("region", (int)regionRepository.count());
 
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-        pModel.addAttribute("updated", dtf.format(LocalDateTime.now()));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+            pModel.addAttribute("updated", dtf.format(LocalDateTime.now()));
 
-        //pieChart
-        pModel.addAttribute("labelsPieChart", brasserieRepository.getRegionFromBrasserieAsc());
-        pModel.addAttribute("datasPieChart", brasserieRepository.getRegionNumberFromBrasserieAsc());
+            //pieChart
+            pModel.addAttribute("labelsPieChart", brasserieRepository.getRegionFromBrasserieAsc());
+            pModel.addAttribute("datasPieChart", brasserieRepository.getRegionNumberFromBrasserieAsc());
 
-        //AreaChart nb biere par taux d'alcool
+            //AreaChart nb biere par taux d'alcool
 
-        pModel.addAttribute("labelsAreaChart", biereRepository.getThxAlcoolAsc());
-        pModel.addAttribute("datasAreaChart", biereRepository.getNbrThxAlcoolAsc());
-
-
-        pModel.addAttribute("labelsBarChart", paysRepository.getNomsPaysAsc());
-        pModel.addAttribute("datasConsommation", paysRepository.getConsoPaysAsc());
-        pModel.addAttribute("datasProduction", paysRepository.getProdPaysAsc());
+            pModel.addAttribute("labelsAreaChart", biereRepository.getThxAlcoolAsc());
+            pModel.addAttribute("datasAreaChart", biereRepository.getNbrThxAlcoolAsc());
 
 
-        pModel.addAttribute("labelsBarChart1", brasserieRepository.getBrasserieAsc());
-        pModel.addAttribute("datasBarChart1", marqueRepository.getMarquesBrasserieAsc());
+            pModel.addAttribute("labelsBarChart", paysRepository.getNomsPaysAsc());
+            pModel.addAttribute("datasConsommation", paysRepository.getConsoPaysAsc());
+            pModel.addAttribute("datasProduction", paysRepository.getProdPaysAsc());
 
 
-        pModel.addAttribute("labelsBarChart2", biereRepository.getmarqueAlcoolAsc());
-        pModel.addAttribute("datasBarChart2", biereRepository.getNbrVerparmarqueAlcoolAsc());
+            pModel.addAttribute("labelsBarChart1", brasserieRepository.getBrasserieAsc());
+            pModel.addAttribute("datasBarChart1", marqueRepository.getMarquesBrasserieAsc());
 
-        return "index";
+
+            pModel.addAttribute("labelsBarChart2", biereRepository.getmarqueAlcoolAsc());
+            pModel.addAttribute("datasBarChart2", biereRepository.getNbrVerparmarqueAlcoolAsc());
+
+            return "index";
+        } else {
+            pModel.addAttribute("login", true);
+            pModel.addAttribute("isBad", false);
+            return "login";
+        }
     }
 
-    @GetMapping("/logout")
-    public String logout(Model pModel, RedirectAttributes pRedirectAttributes, HttpSession pSession){
-        return "redirect:/";
-    }
+//    @GetMapping("/logout")
+//    public String logout(Model pModel, RedirectAttributes pRedirectAttributes, HttpSession pSession){
+//        return "redirect:/";
+//    }
 }

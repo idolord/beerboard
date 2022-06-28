@@ -50,7 +50,10 @@
                             <a th:href="@{/see-beer(marque=${beer.getMarque().getNomMarque()},version=${beer.getVersion()})}"><img src="/img/oeuil.png" width="20" height="20"/></a>
                         </td>
                         <td>
-                            <a th:href="@{/add-brewery(isMod=${true},marque=${beer.getMarque()},version=${beer.getVersion()})}"><img src="/img/OIP.jfif" width="20" height="20"/></a>
+                            <a th:href="@{/add-beer(isMod=${true},marque=${beer.getMarque().getNomMarque()},version=${beer.getVersion()})}"><img src="/img/OIP.jfif" width="20" height="20"/></a>
+                        </td>
+                        <td>
+                            <a class="text-danger" th:href="@{/delete-beer(marque=${beer.getMarque().getNomMarque()},version=${beer.getVersion()})}"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
                     </tbody>

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 //indique à spring boot un routage
@@ -43,7 +45,7 @@ public class BreweriesController {
     }
 
     @GetMapping("/add-brewery")
-    public String GetPageModifiBrassery(Model pModel, @RequestParam boolean isMod, @RequestParam(required = false) String codeBrass )
+    public String GetPageModifiBrassery(Model pModel, @RequestParam boolean isMod, @RequestParam(required = false) String codeBrass)
     {
         pModel.addAttribute("update", isMod);
         Brasserie brasserie = new Brasserie();
@@ -57,9 +59,46 @@ public class BreweriesController {
     }
 
     @PostMapping("/valid-brewery")
-    public String ValidateBrassery(@ModelAttribute Brasserie brasserie, Model pModel)
+    public String ValidateBrassery(@ModelAttribute Brasserie brasserie,String update, Model pModel, RedirectAttributes redir)
     {
-        brasserieRepository.save(brasserie);
-        return "redirect:breweries";
+        if (!Boolean.valueOf(update))
+        {
+            if (!brasserieRepository.existsById(brasserie.getCodeBrasserie()))
+            {
+                brasserieRepository.save(brasserie);
+                return "redirect:breweries";
+            }
+            else {
+                redir.addFlashAttribute("msg"," L’identifiant de la brasserie existe déjà, veuillez en saisir un nouveau ou vérifier que cette \n" +
+                        "brasserie n’existe pas déjà.");
+                return "redirect:/add-brewery?isMod=false";
+            }
+        }
+        else {
+            brasserieRepository.save(brasserie);
+            return "redirect:breweries";
+        }
     }
+
+    @GetMapping("/delete-brewery")
+    public String supprimerBrasserieForm(Model pModel, @RequestParam String codeBrass, HttpSession session,RedirectAttributes redir)
+    {
+        if (session.getAttribute("auth") != null)
+        {
+            if (biereRepository.getBierefromBrasserie(codeBrass).size() > 0)
+            {
+                redir.addFlashAttribute("msg"," Une bière de cette marque avec cette version existe déjà, veuillez saisir une nouvelle\n" +
+                        "version.");
+            }else{
+                brasserieRepository.deleteById(codeBrass);
+            }
+            return "redirect:/brewery";
+
+        }else {
+            // Page de connexion
+            return "login";
+        }
+
+    }
+
 }
