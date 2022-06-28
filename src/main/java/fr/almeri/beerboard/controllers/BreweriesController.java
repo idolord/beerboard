@@ -87,8 +87,7 @@ public class BreweriesController {
         {
             if (biereRepository.getBierefromBrasserie(codeBrass).size() > 0)
             {
-                redir.addFlashAttribute("msg"," Une bière de cette marque avec cette version existe déjà, veuillez saisir une nouvelle\n" +
-                        "version.");
+                redir.addFlashAttribute("msg"," Cette brasserie dispose de bières veullez les supprimer pour pourvoir supprimer la brasserie.");
             }else{
                 brasserieRepository.deleteById(codeBrass);
             }
